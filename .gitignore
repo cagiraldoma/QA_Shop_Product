@@ -1,0 +1,43 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Prisma
+backend/prisma/migrations/
+
+# Agent infrastructure
+.atl/
+
+# QA artifacts
+test-results/
+playwright-report/
+allure-results/
+allure-report/
+blob-report/
+storageState/*.json
