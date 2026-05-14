@@ -1,9 +1,9 @@
-import axios from 'axios';
-import { useAuthStore } from '../stores/authStore';
+import axios from "axios";
+import { useAuthStore } from "../stores/authStore";
 
 const api = axios.create({
-  baseURL: '/api',
-  headers: { 'Content-Type': 'application/json' },
+  baseURL: "/api",
+  headers: { "Content-Type": "application/json" },
 });
 
 api.interceptors.request.use((config) => {
@@ -18,15 +18,15 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const requestUrl = error.config?.url || '';
+      const requestUrl = error.config?.url || "";
       const isAuthEndpoint =
-        requestUrl.startsWith('/auth/login') ||
-        requestUrl.startsWith('/auth/register');
-      const isLoginPage = window.location.pathname === '/login';
+        requestUrl.includes("/auth/login") ||
+        requestUrl.includes("/auth/register");
+      const isLoginPage = window.location.pathname === "/login";
 
       if (!isAuthEndpoint && !isLoginPage) {
         useAuthStore.getState().logout();
-        window.location.href = '/login';
+        window.location.href = "/login";
       }
     }
     return Promise.reject(error);
