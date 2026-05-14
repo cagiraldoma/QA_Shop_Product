@@ -40,7 +40,8 @@ async function globalSetup(_fullConfig: FullConfig): Promise<void> {
     const adminRegister = await authEndpoint.register({
       email: config.ADMIN_EMAIL,
       password: config.ADMIN_PASSWORD,
-      name: 'Admin User',
+      firstName: 'Admin',
+      lastName: 'User',
     });
     apiClient.setAuthToken(adminRegister.token);
     await reqContext.storageState({ path: path.join(storageDir, 'admin.json') });
@@ -60,7 +61,8 @@ async function globalSetup(_fullConfig: FullConfig): Promise<void> {
     const customerRegister = await authEndpoint.register({
       email: config.CUSTOMER_EMAIL,
       password: config.CUSTOMER_PASSWORD,
-      name: 'Test Customer',
+      firstName: 'Test',
+      lastName: 'Customer',
     });
     apiClient.setAuthToken(customerRegister.token);
     await reqContext.storageState({ path: path.join(storageDir, 'customer.json') });
