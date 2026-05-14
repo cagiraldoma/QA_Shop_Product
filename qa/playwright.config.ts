@@ -21,7 +21,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     baseURL: process.env.BASE_URL || 'http://localhost/',
-    headless: false,
+    headless: true,
   },
   metadata: {
     env: process.env.ENV || 'dev',
