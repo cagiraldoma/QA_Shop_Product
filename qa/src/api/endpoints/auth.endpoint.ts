@@ -13,7 +13,7 @@ export class AuthEndpoint {
     await this.client.post<void>('/auth/logout', {});
   }
 
-  async register(data: { email: string; password: string; name: string }): Promise<LoginResponse> {
+  async register(data: { email: string; password: string; firstName: string; lastName: string }): Promise<LoginResponse> {
     const res = await this.client.post<LoginResponse>('/auth/register', data);
     return res.data;
   }

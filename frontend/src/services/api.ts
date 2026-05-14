@@ -18,8 +18,16 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      useAuthStore.getState().logout();
-      window.location.href = '/login';
+      const requestUrl = error.config?.url || '';
+      const isAuthEndpoint =
+        requestUrl.startsWith('/auth/login') ||
+        requestUrl.startsWith('/auth/register');
+      const isLoginPage = window.location.pathname === '/login';
+
+      if (!isAuthEndpoint && !isLoginPage) {
+        useAuthStore.getState().logout();
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   },
