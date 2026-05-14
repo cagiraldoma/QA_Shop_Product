@@ -6,7 +6,9 @@ test.describe('@e2e @smoke Cart', () => {
     await shopPage.goto(`${config.BASE_URL}/shop`);
     await shopPage.waitForLoad();
     await productCard.addToCart();
+    // await loginPage.login(`${config.CUSTOMER_EMAIL}`, `${config.CUSTOMER_PASSWORD}`);
     await cartPage.goto(`${config.BASE_URL}/cart`);
+
     await cartPage.waitForLoad();
     await cartPage.toBeOnCartPage();
     const count = await cartPage.getCartItemsCount();

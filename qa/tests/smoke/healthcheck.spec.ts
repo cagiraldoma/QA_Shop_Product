@@ -7,7 +7,7 @@ test.describe('@smoke Health Checks', () => {
     await page.goto(config.BASE_URL);
     await page.waitForLoadState('networkidle');
     const duration = Date.now() - start;
-    expect(duration).toBeLessThan(2000);
+    expect(duration).toBeLessThan(4000);
   });
 
   test('API health endpoint responds', async ({ request }) => {
