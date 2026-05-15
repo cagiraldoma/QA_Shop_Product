@@ -30,28 +30,28 @@ export class SeedRunner {
   async seedAdmin(email: string, password: string): Promise<{ user: unknown; token: string }> {
     try {
       const result = await this.authEndpoint.login({ email, password });
-      this.apiClient.setAuthToken(result.token);
-      return { user: result.user, token: result.token };
+      this.apiClient.setAuthToken(result.accessToken);
+      return { user: result.user, token: result.accessToken };
     } catch {
       const userData = UserFactory.build({ email, password, role: 'admin', firstName: 'Admin', lastName: 'User' });
       const user = await this.usersEndpoint.create(userData);
       this.createdUserIds.push((user as User).id);
       const result = await this.authEndpoint.login({ email, password });
-      this.apiClient.setAuthToken(result.token);
-      return { user, token: result.token };
+      this.apiClient.setAuthToken(result.accessToken);
+      return { user, token: result.accessToken };
     }
   }
 
   async seedCustomer(email: string, password: string): Promise<{ user: unknown; token: string }> {
     try {
       const result = await this.authEndpoint.login({ email, password });
-      return { user: result.user, token: result.token };
+      return { user: result.user, token: result.accessToken };
     } catch {
       const userData = UserFactory.build({ email, password, role: 'customer', firstName: 'Test', lastName: 'Customer' });
       const user = await this.usersEndpoint.create(userData);
       this.createdUserIds.push((user as User).id);
       const result = await this.authEndpoint.login({ email, password });
-      return { user, token: result.token };
+      return { user, token: result.accessToken };
     }
   }
 

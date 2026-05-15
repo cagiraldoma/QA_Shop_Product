@@ -7,4 +7,5 @@ export type { BaseFixtures } from './base.fixture';
 export type { PagesFixtures } from './pages.fixture';
 export type { AuthFixtures } from './auth.fixture';
 export type { ApiFixtures } from './api.fixture';
+export type { CategoriesEndpoint } from '@api/index';
 export type { DataFixtures } from './data.fixture';

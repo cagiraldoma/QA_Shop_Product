@@ -124,6 +124,7 @@ export interface User {
   lastName: string;
   email: string;
   avatarUrl: string | null;
+  isActive: boolean;
 }
 
 // Basic CartItem for test helpers

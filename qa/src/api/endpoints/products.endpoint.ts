@@ -1,5 +1,6 @@
 import { ApiClient } from '../api-client';
 import { Product, ProductFilters } from '@domain-types/index';
+import { ProductCreatePayload } from '@data/factories/product.factory';
 
 export class ProductsEndpoint {
   constructor(private client: ApiClient) {}
@@ -20,17 +21,17 @@ export class ProductsEndpoint {
     return res.data;
   }
 
-  async getById(id: string): Promise<Product> {
-    const res = await this.client.get<Product>(`/products/${id}`);
+  async getBySlug(slug: string): Promise<Product> {
+    const res = await this.client.get<Product>(`/products/${slug}`);
     return res.data;
   }
 
-  async create(payload: Partial<Product>): Promise<Product> {
+  async create(payload: ProductCreatePayload): Promise<Product> {
     const res = await this.client.post<Product>('/products', payload);
     return res.data;
   }
 
-  async update(id: string, payload: Partial<Product>): Promise<Product> {
+  async update(id: string, payload: Partial<ProductCreatePayload>): Promise<Product> {
     const res = await this.client.patch<Product>(`/products/${id}`, payload);
     return res.data;
   }

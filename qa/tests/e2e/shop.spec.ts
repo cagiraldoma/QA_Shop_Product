@@ -12,6 +12,6 @@ test.describe('@e2e @smoke Shop', () => {
   test('user can filter by category', async ({ page, shopPage }) => {
     await shopPage.goto(`${config.BASE_URL}/shop`);
     await shopPage.selectCategory('electronics');
-    await expect(page).toHaveURL(/category\/electronics/);
+    await expect(page).toHaveURL(/shop.*category=electronics/);
   });
 });

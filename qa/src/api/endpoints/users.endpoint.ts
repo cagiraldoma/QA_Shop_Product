@@ -19,8 +19,14 @@ export class UsersEndpoint {
   }
 
   async create(payload: Partial<User>): Promise<User> {
-    const res = await this.client.post<User>('/users', payload);
-    return res.data;
+    const registerPayload = {
+      email: payload.email,
+      password: payload.password,
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+    };
+    const res = await this.client.post<{ accessToken: string; user: User }>('/auth/register', registerPayload);
+    return res.data.user;
   }
 
   async update(id: string, payload: Partial<User>): Promise<User> {

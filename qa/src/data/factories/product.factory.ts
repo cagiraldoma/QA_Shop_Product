@@ -1,41 +1,50 @@
 import { faker } from '@faker-js/faker';
-import { Product } from '@domain-types/index';
 
 faker.seed(12345);
 
 export interface ProductOverrides {
   name?: string;
-  price?: string;
+  price?: number;
   stock?: number;
   categoryId?: string;
   description?: string;
-  featured?: boolean;
+  isFeatured?: boolean;
+  slug?: string;
+  sku?: string;
 }
 
-export type ProductBuildResult = Partial<Product> & {
-  categoryId?: string;
-  featured?: boolean;
-};
+export interface ProductCreatePayload {
+  name: string;
+  slug: string;
+  description: string;
+  price: number;
+  comparePrice?: number;
+  stock?: number;
+  sku: string;
+  imageUrls?: string[];
+  isFeatured?: boolean;
+  categoryId: string;
+}
 
 export class ProductFactory {
-  static build(overrides: ProductOverrides = {}): ProductBuildResult {
+  static build(overrides: ProductOverrides = {}): ProductCreatePayload {
+    const name = overrides.name ?? faker.commerce.productName();
+    const baseSlug = faker.helpers.slugify(name).toLowerCase();
+    const uniqueSuffix = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
     return {
-      name: overrides.name ?? faker.commerce.productName(),
-      price: overrides.price ?? String(faker.number.int({ min: 10, max: 1000 })),
-      stock: overrides.stock ?? faker.number.int({ min: 1, max: 100 }),
-      categoryId: overrides.categoryId,
+      name,
+      slug: overrides.slug ?? `${baseSlug}-${uniqueSuffix}`,
       description: overrides.description ?? faker.commerce.productDescription(),
-      featured: overrides.featured ?? false,
-      sku: faker.string.alphanumeric(8).toUpperCase(),
+      price: overrides.price ?? faker.number.int({ min: 10, max: 1000 }),
+      stock: overrides.stock ?? faker.number.int({ min: 1, max: 100 }),
+      sku: overrides.sku ?? `${faker.string.alphanumeric(4).toUpperCase()}-${uniqueSuffix}`,
       imageUrls: [faker.image.urlPicsumPhotos()],
-      isActive: true,
-      isFeatured: overrides.featured ?? false,
-      avgRating: 0,
-      reviewCount: 0,
+      isFeatured: overrides.isFeatured ?? false,
+      categoryId: overrides.categoryId ?? faker.string.uuid(),
     };
   }
 
-  static buildMany(count: number, overrides: ProductOverrides = {}): ProductBuildResult[] {
+  static buildMany(count: number, overrides: ProductOverrides = {}): ProductCreatePayload[] {
     return Array.from({ length: count }, () => ProductFactory.build(overrides));
   }
 }

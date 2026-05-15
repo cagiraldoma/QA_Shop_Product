@@ -10,7 +10,7 @@ interface Summary {
   duration: number;
 }
 
-export class CiReporter implements Reporter {
+export default class CiReporter implements Reporter {
   private summary: Summary = { total: 0, passed: 0, failed: 0, skipped: 0, duration: 0 };
 
   onBegin(config: FullConfig, suite: Suite): void {
