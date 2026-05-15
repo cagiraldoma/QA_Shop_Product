@@ -15,6 +15,7 @@ test.describe('@api @regression Users CRUD', () => {
     expect(updated.firstName).toBe('Updated');
 
     await usersEndpoint.delete((created as User).id);
-    await expect(usersEndpoint.getById((created as User).id)).rejects.toBeDefined();
+    const fetchedAfterDelete = await usersEndpoint.getById((created as User).id);
+    expect(fetchedAfterDelete.isActive).toBe(false);
   });
 });

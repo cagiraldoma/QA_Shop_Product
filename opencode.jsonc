@@ -1,0 +1,57 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // MCP Servers — instala los que quieras usar y cambia "enabled" a true
+  "mcp": {
+    // Playwright: ideal para automatización de navegador en este proyecto QA
+    // Instalación: npm install -g @playwright/mcp (o npx -y @playwright/mcp)
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp"],
+      "enabled": true,
+      "env": {
+        "BROWSER": "chromium",
+      },
+    },
+
+    // PostgreSQL: consulta directa a la base de datos ecommerce_qa
+    // Instalación: npm install -g @modelcontextprotocol/server-postgres
+    // Ajusta los parámetros de conexión según tu .env
+    "postgres": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://postgres:postgres@localhost:5432/ecommerce_qa",
+      ],
+      "enabled": false,
+    },
+
+    // GitHub: gestión de issues, PRs y código desde el chat
+    // Instalación: npm install -g @modelcontextprotocol/server-github
+    // Necesitas exportar GITHUB_TOKEN como variable de entorno
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "enabled": false,
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}",
+      },
+    },
+
+    // Filesystem: operaciones avanzadas de lectura/escritura de archivos
+    // Instalación: npm install -g @modelcontextprotocol/server-filesystem
+    // Reemplaza /path/to/project con la ruta absoluta de este repo
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/path/to/qa-practice-product",
+      ],
+      "enabled": false,
+    },
+  },
+}

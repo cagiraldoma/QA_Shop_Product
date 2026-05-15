@@ -22,7 +22,7 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  token: string;
+  accessToken: string;
   user: {
     id: string;
     email: string;

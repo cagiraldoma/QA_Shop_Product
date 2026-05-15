@@ -41,3 +41,6 @@ allure-results/
 allure-report/
 blob-report/
 storageState/*.json
+qa/tests/visual/login-page.visual.spec.ts-snapshots/
+.playwright-mcp/
+NUL

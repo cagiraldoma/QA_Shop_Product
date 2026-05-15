@@ -86,6 +86,28 @@ export class ApiClient {
     return this.requestWithError<T>('DELETE', endpoint, undefined, options);
   }
 
+  async getRaw<T>(endpoint: string, options?: RequestOptions): Promise<T> {
+    const url = `${this.baseURL}${endpoint}`;
+    testLogger.debug(`GET ${url} (raw)`);
+
+    const requestOptions: Record<string, unknown> = {
+      headers: { ...this.headers(), ...options?.headers },
+      timeout: options?.timeout || 30000,
+    };
+
+    const response = await this.request.get(url, requestOptions);
+    if (!response.ok()) {
+      const errorBody = await response.json().catch(() => ({}));
+      const error: ApiError = {
+        statusCode: response.status(),
+        message: (errorBody as Record<string, unknown>).message as string || `HTTP ${response.status()}`,
+        errors: (errorBody as Record<string, unknown>).errors as Array<{ field: string; message: string }>,
+      };
+      throw error;
+    }
+    return response.json() as Promise<T>;
+  }
+
   setAuthToken(token: string): void {
     this.authToken = token;
   }
